@@ -4,7 +4,6 @@ import { RelayEnvironmentProvider, loadQuery } from "react-relay/hooks";
 import RelayEnvironment from "./RelayEnvironment";
 import React from "react";
 import Country from "./components/Country";
-import Home from "./pages/Home";
 const { Suspense } = React;
 
 const countryQuery = graphql`
@@ -16,22 +15,6 @@ const countryQuery = graphql`
     }
   }
 `;
-// const countryQuery = graphql`
-//   query AppGetCountryQuery($id: ID!) {
-//     country(code: $id) {
-//       name
-//       native
-//       phone
-//       capital
-//       states {
-//         code
-//         name
-//       }
-//       emojiU
-//       emoji
-//     }
-//   }
-// `;
 
 const preloadedQuery = loadQuery(RelayEnvironment, countryQuery, { id: "CU" });
 
@@ -57,13 +40,3 @@ function AppRoot(props) {
 }
 
 export default AppRoot;
-
-// export default function HHM() {
-//   return (
-//     <RelayEnvironmentProvider environment={RelayEnvironment}>
-//       <Suspense fallback={"Loading..."}>
-//         <Home />
-//       </Suspense>
-//     </RelayEnvironmentProvider>
-//   );
-// }
