@@ -7,7 +7,8 @@ import Country from "./components/Country";
 const { Suspense } = React;
 
 const countryQuery = graphql`
-  query AppGetCountryQuery($id: ID!) {
+  query AppGetCountryQuery($id: ID!, $id2: ID!) {
+    ...CountryRefreshFragment
     country(code: $id) {
       code
       name
@@ -23,7 +24,10 @@ const Loader = () => {
   return <div>Loading...</div>;
 };
 
-const preloadedQuery = loadQuery(RelayEnvironment, countryQuery, { id: "CU" });
+const preloadedQuery = loadQuery(RelayEnvironment, countryQuery, {
+  id: "CU",
+  id2: "US",
+});
 
 function App(props) {
   return (

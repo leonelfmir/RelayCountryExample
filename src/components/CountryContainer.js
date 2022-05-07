@@ -15,7 +15,7 @@ export default function CountryContainer(props) {
         ...Country3Fragment
       }
     `,
-    rootQuery
+    rootQuery.country
   );
 
   return (

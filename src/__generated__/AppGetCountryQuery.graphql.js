@@ -9,15 +9,18 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type CountryContainerFragment$ref = any;
+type CountryRefreshFragment$ref = any;
 export type AppGetCountryQueryVariables = {|
-  id: string
+  id: string,
+  id2: string,
 |};
 export type AppGetCountryQueryResponse = {|
   +country: ?{|
     +code: string,
     +name: string,
     +$fragmentRefs: CountryContainerFragment$ref,
-  |}
+  |},
+  +$fragmentRefs: CountryRefreshFragment$ref,
 |};
 export type AppGetCountryQuery = {|
   variables: AppGetCountryQueryVariables,
@@ -29,7 +32,9 @@ export type AppGetCountryQuery = {|
 /*
 query AppGetCountryQuery(
   $id: ID!
+  $id2: ID!
 ) {
+  ...CountryRefreshFragment
   country(code: $id) {
     code
     name
@@ -57,6 +62,12 @@ fragment CountryContainerFragment on Country {
   ...Country2Fragment
   ...Country3Fragment
 }
+
+fragment CountryRefreshFragment on Query {
+  country2: country(code: $id2) {
+    name
+  }
+}
 */
 
 const node/*: ConcreteRequest*/ = (function(){
@@ -65,6 +76,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "id"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id2"
   }
 ],
 v1 = [
@@ -112,6 +128,11 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "CountryRefreshFragment"
       }
     ],
     "type": "Query",
@@ -123,6 +144,24 @@ return {
     "kind": "Operation",
     "name": "AppGetCountryQuery",
     "selections": [
+      {
+        "alias": "country2",
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "code",
+            "variableName": "id2"
+          }
+        ],
+        "concreteType": "Country",
+        "kind": "LinkedField",
+        "name": "country",
+        "plural": false,
+        "selections": [
+          (v3/*: any*/)
+        ],
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": (v1/*: any*/),
@@ -187,16 +226,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8a5c43985f216039803a2ecbd5ea3f8d",
+    "cacheID": "c0e7b5c9cfb3aedb66fdd461ad2f59a8",
     "id": null,
     "metadata": {},
     "name": "AppGetCountryQuery",
     "operationKind": "query",
-    "text": "query AppGetCountryQuery(\n  $id: ID!\n) {\n  country(code: $id) {\n    code\n    name\n    ...CountryContainerFragment\n  }\n}\n\nfragment Country2Fragment on Country {\n  name\n  native\n  phone\n  capital\n  emojiU\n  emoji\n}\n\nfragment Country3Fragment on Country {\n  states {\n    code\n    name\n  }\n}\n\nfragment CountryContainerFragment on Country {\n  ...Country2Fragment\n  ...Country3Fragment\n}\n"
+    "text": "query AppGetCountryQuery(\n  $id: ID!\n  $id2: ID!\n) {\n  ...CountryRefreshFragment\n  country(code: $id) {\n    code\n    name\n    ...CountryContainerFragment\n  }\n}\n\nfragment Country2Fragment on Country {\n  name\n  native\n  phone\n  capital\n  emojiU\n  emoji\n}\n\nfragment Country3Fragment on Country {\n  states {\n    code\n    name\n  }\n}\n\nfragment CountryContainerFragment on Country {\n  ...Country2Fragment\n  ...Country3Fragment\n}\n\nfragment CountryRefreshFragment on Query {\n  country2: country(code: $id2) {\n    name\n  }\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4df69280d3e0d297e238744e96e4f207';
+(node/*: any*/).hash = 'bded5160e52958a4ec656471060d9e12';
 
 module.exports = node;
