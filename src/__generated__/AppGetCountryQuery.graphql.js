@@ -8,7 +8,7 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-type CountryContainer_country$ref = any;
+type CountryContainerFragment$ref = any;
 export type AppGetCountryQueryVariables = {|
   id: string
 |};
@@ -16,7 +16,7 @@ export type AppGetCountryQueryResponse = {|
   +country: ?{|
     +code: string,
     +name: string,
-    +$fragmentRefs: CountryContainer_country$ref,
+    +$fragmentRefs: CountryContainerFragment$ref,
   |}
 |};
 export type AppGetCountryQuery = {|
@@ -33,21 +33,29 @@ query AppGetCountryQuery(
   country(code: $id) {
     code
     name
-    ...CountryContainer_country
+    ...CountryContainerFragment
   }
 }
 
-fragment CountryContainer_country on Country {
+fragment Country2Fragment on Country {
   name
   native
   phone
   capital
+  emojiU
+  emoji
+}
+
+fragment Country3Fragment on Country {
   states {
     code
     name
   }
-  emojiU
-  emoji
+}
+
+fragment CountryContainerFragment on Country {
+  ...Country2Fragment
+  ...Country3Fragment
 }
 */
 
@@ -100,7 +108,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "CountryContainer_country"
+            "name": "CountryContainerFragment"
           }
         ],
         "storageKey": null
@@ -149,19 +157,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "State",
-            "kind": "LinkedField",
-            "name": "states",
-            "plural": true,
-            "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "kind": "ScalarField",
             "name": "emojiU",
             "storageKey": null
@@ -172,6 +167,19 @@ return {
             "kind": "ScalarField",
             "name": "emoji",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "State",
+            "kind": "LinkedField",
+            "name": "states",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/)
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -179,16 +187,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "58ee4f413e6db859e5f44bbb74642ab5",
+    "cacheID": "8a5c43985f216039803a2ecbd5ea3f8d",
     "id": null,
     "metadata": {},
     "name": "AppGetCountryQuery",
     "operationKind": "query",
-    "text": "query AppGetCountryQuery(\n  $id: ID!\n) {\n  country(code: $id) {\n    code\n    name\n    ...CountryContainer_country\n  }\n}\n\nfragment CountryContainer_country on Country {\n  name\n  native\n  phone\n  capital\n  states {\n    code\n    name\n  }\n  emojiU\n  emoji\n}\n"
+    "text": "query AppGetCountryQuery(\n  $id: ID!\n) {\n  country(code: $id) {\n    code\n    name\n    ...CountryContainerFragment\n  }\n}\n\nfragment Country2Fragment on Country {\n  name\n  native\n  phone\n  capital\n  emojiU\n  emoji\n}\n\nfragment Country3Fragment on Country {\n  states {\n    code\n    name\n  }\n}\n\nfragment CountryContainerFragment on Country {\n  ...Country2Fragment\n  ...Country3Fragment\n}\n"
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ea58de2c00211f219c41db18968d0e93';
+(node/*: any*/).hash = '4df69280d3e0d297e238744e96e4f207';
 
 module.exports = node;

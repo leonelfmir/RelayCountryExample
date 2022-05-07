@@ -1,33 +1,29 @@
 import { useFragment } from "react-relay";
 import Country2 from "./Country2";
 import graphql from "babel-plugin-relay/macro";
-import React, { useEffect } from "react";
+import React from "react";
 import RootQueryContext from "./RootQueryContext";
+import Country3 from "./Country3";
 
 export default function CountryContainer(props) {
   const rootQuery = React.useContext(RootQueryContext);
 
   const data = useFragment(
     graphql`
-      fragment CountryContainer_country on Country {
-        name
-        native
-        phone
-        capital
-        states {
-          code
-          name
-        }
-        emojiU
-        emoji
+      fragment CountryContainerFragment on Country {
+        ...Country2Fragment
+        ...Country3Fragment
       }
     `,
     rootQuery
   );
 
-  useEffect(() => {
-    console.info({ rootQuery });
-  }, [rootQuery]);
-
-  return <Country2 country={data} />;
+  return (
+    <>
+      <h1>ID</h1>
+      <Country2 countryRoot={data} />
+      <h2>States</h2>
+      <Country3 countryRoot={data} />
+    </>
+  );
 }

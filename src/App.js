@@ -2,7 +2,7 @@ import "./App.css";
 import graphql from "babel-plugin-relay/macro";
 import { RelayEnvironmentProvider, loadQuery } from "react-relay/hooks";
 import RelayEnvironment from "./RelayEnvironment";
-import React from "react";
+import React, { useEffect } from "react";
 import Country from "./components/Country";
 const { Suspense } = React;
 
@@ -11,10 +11,17 @@ const countryQuery = graphql`
     country(code: $id) {
       code
       name
-      ...CountryContainer_country
+      ...CountryContainerFragment
     }
   }
 `;
+
+const Loader = () => {
+  useEffect(() => {
+    console.info("Loading countries");
+  }, []);
+  return <div>Loading...</div>;
+};
 
 const preloadedQuery = loadQuery(RelayEnvironment, countryQuery, { id: "CU" });
 
@@ -32,7 +39,7 @@ function App(props) {
 function AppRoot(props) {
   return (
     <RelayEnvironmentProvider environment={RelayEnvironment}>
-      <Suspense fallback={"Loading..."}>
+      <Suspense fallback={<Loader />}>
         <App preloadedQuery={preloadedQuery} />
       </Suspense>
     </RelayEnvironmentProvider>
