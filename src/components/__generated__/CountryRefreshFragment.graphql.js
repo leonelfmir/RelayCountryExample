@@ -34,7 +34,13 @@ const node/*: ReaderFragment*/ = {
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "refetch": {
+      "connection": null,
+      "fragmentPathInResult": [],
+      "operation": require('./CountryRefetchQuery.graphql.js')
+    }
+  },
   "name": "CountryRefreshFragment",
   "selections": [
     {
@@ -66,6 +72,6 @@ const node/*: ReaderFragment*/ = {
   "abstractKey": null
 };
 // prettier-ignore
-(node/*: any*/).hash = 'fb51e9e3fd53e95077278ffdf18aeb73';
+(node/*: any*/).hash = '3768d36b3aa160c70323793f889e88fe';
 
 module.exports = node;

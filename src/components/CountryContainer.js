@@ -4,6 +4,7 @@ import graphql from "babel-plugin-relay/macro";
 import React from "react";
 import RootQueryContext from "./RootQueryContext";
 import Country3 from "./Country3";
+import { Suspense } from "react";
 
 export default function CountryContainer(props) {
   const rootQuery = React.useContext(RootQueryContext);
@@ -21,9 +22,14 @@ export default function CountryContainer(props) {
   return (
     <>
       <h1>ID</h1>
-      <Country2 countryRoot={data} />
+      <Suspense fallback="...loading">
+        <Country2 countryRoot={data} />
+      </Suspense>
+
       <h2>States</h2>
-      <Country3 countryRoot={data} />
+      <Suspense fallback="...loading">
+        <Country3 countryRoot={data} />
+      </Suspense>
     </>
   );
 }

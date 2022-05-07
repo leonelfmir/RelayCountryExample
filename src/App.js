@@ -2,9 +2,8 @@ import "./App.css";
 import graphql from "babel-plugin-relay/macro";
 import { RelayEnvironmentProvider, loadQuery } from "react-relay/hooks";
 import RelayEnvironment from "./RelayEnvironment";
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import Country from "./components/Country";
-const { Suspense } = React;
 
 const countryQuery = graphql`
   query AppGetCountryQuery($id: ID!, $id2: ID!) {
