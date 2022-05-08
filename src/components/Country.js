@@ -1,8 +1,8 @@
 import { usePreloadedQuery } from "react-relay/hooks";
 import CountryContainer from "./CountryContainer";
-import CountryRefresh from "./CountryRefresh";
 import RootQueryContext from "./RootQueryContext";
 import React, { Suspense } from "react";
+import CountryRefreshContainer from "./CountryRefreshContainer";
 
 export default function Country(props) {
   const data = usePreloadedQuery(props.countryQuery, props.preloadedQuery);
@@ -10,7 +10,7 @@ export default function Country(props) {
   return (
     <RootQueryContext.Provider value={data}>
       <Suspense fallback="...loading">
-        <CountryRefresh />
+        <CountryRefreshContainer />
       </Suspense>
       <hr />
       <Suspense fallback="...loading">
