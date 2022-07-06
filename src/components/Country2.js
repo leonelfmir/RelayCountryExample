@@ -15,6 +15,7 @@ export default function Country2({ countryRoot }) {
     `,
     countryRoot
   );
+  console.log("here", country);
   return (
     <div className="country">
       <p>{country.name}</p>

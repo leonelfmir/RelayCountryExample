@@ -19,7 +19,7 @@ export default function CountryRefresh({ country }) {
 
   useEffect(() => {
     refetch({ id2: country }, { fetchPolicy: "store-or-network" });
-  }, [country]);
+  }, [country, refetch]);
 
   return <>{data.country2.name}</>;
 }
